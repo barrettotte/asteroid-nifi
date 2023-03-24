@@ -1,0 +1,6 @@
+
+CREATE TABLE IF NOT EXISTS asteroid (
+    id SERIAL PRIMARY KEY,
+    create_date DATE NOT NULL,
+    name VARCHAR(64) DEFAULT NULL
+);
