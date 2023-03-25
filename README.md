@@ -4,8 +4,6 @@ A NiFi flow to ingest and transform fake Near-Earth Object (NEO) data based on t
 
 ## TODO
 
-shell, SpringBoot API --> nifi --> postgres
-
 Near earth objects - data model based on https://cneos.jpl.nasa.gov/
 
 - Flask app with Jinja - generate random sets of NEOs in simple web page, save to MongoDB (NiFi pull from here)
@@ -24,7 +22,6 @@ Steps:
 - NEO data model
 - base SpringBoot API; CRUD on postgres; swagger
 - Apache Kafka layer
-- Thymeleaf interface to submit NEO to Kafka
 - Shell write to Kafka
 - base flask app; write to Mongodb
 - Flask jinja frontend
@@ -39,4 +36,12 @@ Steps:
 
 TODO: diagram
 
+## URLs
+
+- Flask Asteroid API - http://localhost:9000
+- SpringBoot Asteroid API - http://localhost:9001
+- SpringBoot Asteroid API Swagger - http://localhost:9001/swagger-ui.html
+
 ## References
+
+- NASA JPL NEO - https://cneos.jpl.nasa.gov/

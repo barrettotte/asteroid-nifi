@@ -3,6 +3,32 @@ version: '3.9'
 name: asteroid-nifi
 
 services:
+  asteroid-flask:
+    container_name: asteroid-flask
+    build:
+      context: ./asteroid-flask
+      dockerfile: Dockerfile
+    ports:
+      - '9000:9000'
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+  asteroid-sb:
+    container_name: asteroid-sb
+    build:
+      context: ./asteroid-springboot
+      dockerfile: Dockerfile
+    ports:
+      - '9001:8080'
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    # docker compose up -d --force-recreate --build asteroid-sb
+
   kafka:
     container_name: kafka
     image: bitnami/kafka:3.3.2
@@ -12,33 +38,20 @@ services:
     volumes:
       - kafka_data:/bitnami
     environment:
-      ALLOW_PLAINTEXT_LISTENER: 'yes'
-      KAFKA_ADVERTISED_HOST_NAME: kafka
-      KAFKA_ADVERTIZED_PORT: 9092
-      KAFKA_BROKER_ID: 1
-      KAFKA_CFG_ADVERTISED_LISTENERS: 'CLIENT://kafka:9092,EXTERNAL://localhost:9093'
-      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: CLIENT
-      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: 'CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT'
-      KAFKA_CFG_LISTENERS: 'CLIENT://:9092,EXTERNAL://:9093'
-      KAFKA_CFG_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      # KAFKA_ZOOKEEPER_USER: kafka
-      # KAFKA_ZOOKEEPER_PASSWORD: password
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_ADVERTISED_HOST_NAME=kafka
+      - KAFKA_ADVERTIZED_PORT=9092
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      # - KAFKA_ZOOKEEPER_USER=kafka
+      # - KAFKA_ZOOKEEPER_PASSWORD=password
     depends_on:
       - zookeeper
     restart: unless-stopped
-
-  # kafka-ui:
-  #   container_name: kafka-ui
-  #   image: provectuslabs/kafka-ui:acfe7a4afcce8da9d111d8922a6cdbb311e53450
-  #   ports:
-  #     - '8250:8080'
-  #   environment:
-  #     - KAFKA_CLUSTERS_0_NAME=local
-  #     - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
-  #   depends_on:
-  #     - kafka
-  #     - zookeeper
-  #   restart: unless-stopped
 
   mongodb:
     container_name: mongodb
