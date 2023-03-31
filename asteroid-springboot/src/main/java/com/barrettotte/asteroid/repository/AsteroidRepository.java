@@ -1,20 +1,8 @@
 package com.barrettotte.asteroid.repository;
 
 import com.barrettotte.asteroid.model.Asteroid;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+public interface AsteroidRepository extends JpaRepository<Asteroid, String> {
 
-@Repository
-public interface AsteroidRepository { // extends CrudRepository<Asteroid, Long> {
-
-    Asteroid getById(long id);
-
-    List<Asteroid> getAll();
-
-    Asteroid create(); // TODO:
-
-    Asteroid update(); // TODO:
-
-    long delete(); // TODO:
 }

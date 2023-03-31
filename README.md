@@ -38,7 +38,7 @@ TODO: diagram
 
 ## URLs
 
-- Flask Asteroid API - http://localhost:9000
+- Flask Asteroid Reporter - http://localhost:9000
 - SpringBoot Asteroid API - http://localhost:9001
 - SpringBoot Asteroid API Swagger - http://localhost:9001/swagger-ui.html
 

@@ -1,6 +1,10 @@
-
 CREATE TABLE IF NOT EXISTS asteroid (
-    id SERIAL PRIMARY KEY,
-    create_date DATE NOT NULL,
-    name VARCHAR(64) DEFAULT NULL
+    id VARCHAR PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    diameter_min NUMERIC NOT NULL,
+    diameter_max NUMERIC NOT NULL,
+    hazard BOOLEAN NOT NULL,
+    relative_velocity NUMERIC NOT NULL,
+    distance NUMERIC NOT NULL,
+    orbiting_body VARCHAR NOT NULL
 );
