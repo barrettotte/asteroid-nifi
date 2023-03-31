@@ -1,13 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
+    <title>Asteroid Reporter</title>
     <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Asteroid</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}"/>
   </head>
   <body>
-    <h1>{{ hello_message }}</h1>
-    <p>Not sure what this is going to look like yet.</p>
+    <main class="container extra-bottom">
+      <h1 class="mt-5 text-center">Asteroid Reporter 📡</h1>
+      <div class="container">
+
+        <!-- asteroid add button -->
+        <div class="add-btn">
+          <button type="button" id="asteroid-add-btn" class="btn btn-outline-info btn-sm" 
+            data-bs-toggle="modal" data-bs-target="#asteroid-modal">Add Asteroid</button>
+        </div>
+
+        <!-- asteroid modal -->
+        <div class="modal fade" id="asteroid-modal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="Label">Add asteroid</h5>
+              </div>
+              <div class="modal-body">
+                <div class="input-group mb-3">
+                  <span class="input-group-text modal-label">Name</span>
+                  <input type="text" class="form-control" id="asteroid-name" placeholder="Name">
+                </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text modal-label">Diameter Min (km)</span>
+                  <input type="number" min="0" class="form-control" id="asteroid-diameter-min" placeholder="Diameter minimum">
+                </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text modal-label">Diameter Max (km)</span>
+                  <input type="number" min="0" class="form-control" id="asteroid-diameter-max" placeholder="Diameter maximum">
+                </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text modal-label">Relative Velocity (km/h)</span>
+                  <input type="number" min="0" class="form-control" id="asteroid-rel-velocity" placeholder="Relative velocity">
+                </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text modal-label">Distance (km)</span>
+                  <input type="number" min="0" class="form-control" id="asteroid-distance" placeholder="Distance">
+                </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text modal-label">Orbiting Body</span>
+                  <input type="text" class="form-control" id="asteroid-orbiting-body" placeholder="Orbiting body">
+                </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text modal-label">Hazard</span>
+                  <input type="checkbox" class="form-control" id="asteroid-hazard">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="asteroid-save-btn" data-bs-dismiss="modal">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- asteroid table -->
+      <div class="container table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Created</th>
+              <th>Name</th>
+              <th>Diameter</th>
+              <th>Hazard</th>
+              <th>Rel. Velocity</th>
+              <th>Distance</th>
+              <th>Orbiting Body</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for asteroid in asteroids %}
+            <tr>
+              <td>{{ asteroid.id }}</td>
+              <td>{{ asteroid.created }}</td>
+              <td class="asteroid-table-col-wide">{{ asteroid.name }}</td>
+              <td>{{ asteroid.diameter_min }} - {{ asteroid.diameter_max }} km</td>
+              <td>{{ asteroid.hazard }}</td>
+              <td>{{ asteroid.rel_velocity }} km/h</td>
+              <td>{{ asteroid.miss_distance }} km</td>
+              <td class="asteroid-table-col-wide">{{ asteroid.orbiting_body }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </main>
   </body>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='modal.js') }}"></script>
 </html>

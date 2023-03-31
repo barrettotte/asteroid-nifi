@@ -45,3 +45,4 @@ TODO: diagram
 ## References
 
 - NASA JPL NEO - https://cneos.jpl.nasa.gov/
+- NASA API: Asteroids - NeoWs - https://api.nasa.gov/

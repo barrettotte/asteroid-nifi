@@ -1,0 +1,50 @@
+html {
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 2em;
+}
+
+hr {
+    width: 50%;
+    margin: auto;
+}
+
+.table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table tr {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.container {
+    width: auto;
+    padding: 0 15px;
+}
+
+.extra-bottom {
+    padding-bottom: 2em;
+}
+
+.add-btn {
+    text-align: right; 
+    padding-bottom: 20px
+}
+
+.modal-label {
+    width: 200px;
+}
+
+#asteroid-hazard {
+    margin-top: 5px;
+    width: 25px;
+    height: 25px
+}
+
+.asteroid-table-col-wide {
+    width: 200px;
+}

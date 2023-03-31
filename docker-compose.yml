@@ -10,6 +10,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - '9000:9000'
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - MONGODB_USERNAME=${MONGODB_USERNAME}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+      - MONGODB_HOST=mongodb
+      - MONGODB_PORT=27017
+      - MONGODB_DB=asteroid
     depends_on:
       - mongodb
     restart: unless-stopped
@@ -21,6 +30,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - '9001:8080'
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -36,6 +48,8 @@ services:
       - '9092:9092'
       - '9093:9093'
     volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
       - kafka_data:/bitnami
     environment:
       - ALLOW_PLAINTEXT_LISTENER=yes
@@ -53,18 +67,35 @@ services:
       - zookeeper
     restart: unless-stopped
 
+  # mock-nasa:
+  #   container_name: mock-nasa
+  #   build:
+  #     context: ./mock-nasa
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - '9050:9050'
+  #   volumes:
+  #     - /etc/timezone:/etc/timezone:ro
+  #     - /etc/localtime:/etc/localtime:ro
+  #   restart: unless-stopped
+
   mongodb:
     container_name: mongodb
     image: mongo:5.0.15
     ports:
       - '27017:27017'
     volumes:
-      - ./mongodb/init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ./mongodb/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
       - mongodb_data:/data/db
     environment:
       - MONGO_INITDB_DATABASE=asteroid
-      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+      - MONGO_USER=${MONGODB_USERNAME}
+      - MONGO_PASSWORD=${MONGODB_PASSWORD}
+      - MONGO_DB=asteroid
     restart: unless-stopped
 
   # nifi:
@@ -73,6 +104,8 @@ services:
   #   ports:
   #     - '8250:8080'
   #   volumes:
+  #     - /etc/timezone:/etc/timezone:ro
+  #     - /etc/localtime:/etc/localtime:ro
   #     - '' # TODO:
   #   environment:
   #     NIFI_WEB_HTTP_POST: 8080
@@ -87,6 +120,8 @@ services:
     ports:
       - '5432:5432'
     volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
       - postgres_data:/var/lib/postgresql/data
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     environment:
@@ -101,6 +136,8 @@ services:
       - '2181:2181'
       # - '8251:8080' # admin
     volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
       - 'zookeeper_data:/bitnami/zookeeper'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
