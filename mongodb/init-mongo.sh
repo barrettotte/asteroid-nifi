@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# init mongodb
+# init mongodb with asteroid user and collection
 
 set -e
 

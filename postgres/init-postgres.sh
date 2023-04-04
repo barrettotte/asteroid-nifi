@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# init postgres with asteroid user, databases, and table
+
 set -e
 
 asteroid_db=asteroid
