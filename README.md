@@ -47,6 +47,8 @@ TODO: diagram
 - Spin up everything - `docker compose up -d`
 - Spin down everything - `docker compose down` (add `--volumes` to also wipe out volumes)
 - Fully rebuild SpringBoot API - `docker compose up -d --force-recreate --build asteroid-sb`
+- Send a random asteroid - `./scripts/push-asteroid.sh`
+- Send 10 random asteroids - `./scripts/push-asteroid-many.sh`
 
 ## References
 
