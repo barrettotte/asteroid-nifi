@@ -21,7 +21,7 @@ public class Asteroid {
     @Column(name = "diameter_max")
     private float diameterMax;
 
-    @Column(name = "diameter_min")
+    @Column(name = "hazard")
     private boolean hazard;
 
     @Column(name = "relative_velocity")

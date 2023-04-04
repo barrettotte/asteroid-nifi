@@ -15,13 +15,12 @@ repositories {
 dependencies {
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.0.4'
+	implementation 'org.springframework.boot:spring-boot-starter-validation:3.0.4'
 	implementation 'org.springframework.boot:spring-boot-starter-web:3.0.4'
 	implementation 'org.springframework.kafka:spring-kafka:3.0.4'
 	implementation 'org.postgresql:postgresql:42.5.4'
 	// TODO: Thymeleaf
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test:3.0.4'
-	testImplementation 'org.springframework.kafka:spring-kafka-test:3.0.4'
 }
 
 tasks.named('test') {

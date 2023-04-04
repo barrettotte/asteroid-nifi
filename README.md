@@ -42,6 +42,12 @@ TODO: diagram
 - SpringBoot Asteroid API - http://localhost:9001
 - SpringBoot Asteroid API Swagger - http://localhost:9001/swagger-ui.html
 
+## Dev
+
+- Spin up everything - `docker compose up -d`
+- Spin down everything - `docker compose down` (add `--volumes` to also wipe out volumes)
+- Fully rebuild SpringBoot API - `docker compose up -d --force-recreate --build asteroid-sb`
+
 ## References
 
 - NASA JPL NEO - https://cneos.jpl.nasa.gov/
