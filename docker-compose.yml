@@ -66,17 +66,17 @@ services:
       - zookeeper
     restart: unless-stopped
 
-  # mock-nasa:
-  #   container_name: mock-nasa
-  #   build:
-  #     context: ./mock-nasa
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - '9050:9050'
-  #   volumes:
-  #     - /etc/timezone:/etc/timezone:ro
-  #     - /etc/localtime:/etc/localtime:ro
-  #   restart: unless-stopped
+  mock-nasa:
+    container_name: mock-nasa
+    build:
+      context: ./mock-nasa
+      dockerfile: Dockerfile
+    ports:
+      - '9050:9050'
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
 
   mongodb:
     container_name: mongodb
@@ -97,21 +97,26 @@ services:
       - MONGO_DB=asteroid
     restart: unless-stopped
 
-  # nifi:
-  #   container_name: nifi
-  #   image: apache/nifi:1.20.0
-  #   ports:
-  #     - '8250:8080'
-  #   volumes:
-  #     - /etc/timezone:/etc/timezone:ro
-  #     - /etc/localtime:/etc/localtime:ro
-  #     - '' # TODO:
-  #   environment:
-  #     NIFI_WEB_HTTP_POST: 8080
-  #     NIFI_WEB_HTTP_HOST: 0.0.0.0
-  #   depends_on:
-  #     - postgres
-  #   restart: unless-stopped
+  nifi:
+    container_name: nifi
+    image: apache/nifi:1.20.0
+    ports:
+      - '8250:8080'
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - nifi_data:/opt/nifi/nifi-1.20.0/data
+      - ./nifi/templates:/opt/nifi/nifi-1.20.0/conf/templates
+      - ./nifi/logback.xml:/opt/nifi/nifi-1.20.0/conf/logback.xml
+    environment:
+      NIFI_WEB_HTTP_HOST: 0.0.0.0
+      NIFI_WEB_HTTP_PORT: 8080
+    depends_on:
+      - kafka
+      - mongodb
+      - postgres
+      - zookeeper
+    restart: unless-stopped
 
   postgres:
     container_name: postgres
@@ -152,5 +157,6 @@ services:
 volumes:
   kafka_data:
   mongodb_data:
+  nifi_data:
   postgres_data:
   zookeeper_data:

@@ -2,23 +2,27 @@ import json
 import traceback
 from flask import abort, Flask, request
 
+# This flask app is just a dev API so I can make sure I get
+# NiFi configured correctly without getting throttled by the NASA API
+
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
-# mock: https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=DEMO_KEY
+# mocking -> https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=DEMO_KEY
 @app.route('/neo/rest/v1/neo/browse', methods=['GET'])
 def browse():
     try:
-        api_key = request.args['api_key']
+        api_key = request.args['api_key'] # ?api_key=DEMO_KEY
         if api_key is None:
             msg = 'Missing api_key'
             app.logger.error(msg)
-            return msg, 400
+            return msg, 403
 
         app.logger.info(f'Browsing asteroids. api_key={api_key}')
 
         with open('asteroid-sample.json', 'r') as f:
             return json.load(f), 200
+
     except Exception as e:
         app.logger.error('Failed to fetch asteroids.\n', e)
         abort(500)
