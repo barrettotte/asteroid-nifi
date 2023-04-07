@@ -5,13 +5,13 @@
     <name>asteroid-nifi</name>
     <snippet>
         <connections>
-            <id>8480f2df-5bea-39b8-0000-000000000000</id>
+            <id>fc875b55-12c4-3a97-0000-000000000000</id>
             <parentGroupId>f7a5e8c5-6ce1-3a3e-0000-000000000000</parentGroupId>
             <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
             <backPressureObjectThreshold>10000</backPressureObjectThreshold>
             <destination>
                 <groupId>f7a5e8c5-6ce1-3a3e-0000-000000000000</groupId>
-                <id>12c5ac09-1499-3e10-0000-000000000000</id>
+                <id>41e4657f-3c00-35be-0000-000000000000</id>
                 <type>PROCESSOR</type>
             </destination>
             <flowFileExpiration>0 sec</flowFileExpiration>
@@ -24,17 +24,17 @@
             <selectedRelationships>success</selectedRelationships>
             <source>
                 <groupId>f7a5e8c5-6ce1-3a3e-0000-000000000000</groupId>
-                <id>3fb330e6-a637-3c0c-0000-000000000000</id>
+                <id>c7cf4b98-2dfe-3d2d-0000-000000000000</id>
                 <type>PROCESSOR</type>
             </source>
             <zIndex>0</zIndex>
         </connections>
         <processors>
-            <id>12c5ac09-1499-3e10-0000-000000000000</id>
+            <id>41e4657f-3c00-35be-0000-000000000000</id>
             <parentGroupId>f7a5e8c5-6ce1-3a3e-0000-000000000000</parentGroupId>
             <position>
                 <x>0.0</x>
-                <y>224.0</y>
+                <y>280.0</y>
             </position>
             <bundle>
                 <artifact>nifi-standard-nar</artifact>
@@ -123,7 +123,6 @@
                     </entry>
                     <entry>
                         <key>Attributes to Log</key>
-                        <value>filename</value>
                     </entry>
                     <entry>
                         <key>attributes-to-log-regex</key>
@@ -165,19 +164,19 @@
                 <name>success</name>
                 <retry>true</retry>
             </relationships>
-            <state>STOPPED</state>
+            <state>RUNNING</state>
             <style/>
             <type>org.apache.nifi.processors.standard.LogAttribute</type>
         </processors>
         <processors>
-            <id>3fb330e6-a637-3c0c-0000-000000000000</id>
+            <id>c7cf4b98-2dfe-3d2d-0000-000000000000</id>
             <parentGroupId>f7a5e8c5-6ce1-3a3e-0000-000000000000</parentGroupId>
             <position>
-                <x>0.0</x>
+                <x>8.0</x>
                 <y>0.0</y>
             </position>
             <bundle>
-                <artifact>nifi-standard-nar</artifact>
+                <artifact>nifi-kafka-2-6-nar</artifact>
                 <group>org.apache.nifi</group>
                 <version>1.20.0</version>
             </bundle>
@@ -188,45 +187,193 @@
                 <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
                 <descriptors>
                     <entry>
-                        <key>File Size</key>
+                        <key>bootstrap.servers</key>
                         <value>
-                            <name>File Size</name>
+                            <name>bootstrap.servers</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>Batch Size</key>
+                        <key>topic</key>
                         <value>
-                            <name>Batch Size</name>
+                            <name>topic</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>Data Format</key>
+                        <key>topic_type</key>
                         <value>
-                            <name>Data Format</name>
+                            <name>topic_type</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>Unique FlowFiles</key>
+                        <key>group.id</key>
                         <value>
-                            <name>Unique FlowFiles</name>
+                            <name>group.id</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>generate-ff-custom-text</key>
+                        <key>Commit Offsets</key>
                         <value>
-                            <name>generate-ff-custom-text</name>
+                            <name>Commit Offsets</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>character-set</key>
+                        <key>max-uncommit-offset-wait</key>
                         <value>
-                            <name>character-set</name>
+                            <dependencies>
+<dependentValues>true</dependentValues>
+<propertyName>Commit Offsets</propertyName>
+                            </dependencies>
+                            <name>max-uncommit-offset-wait</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>mime-type</key>
+                        <key>honor-transactions</key>
                         <value>
-                            <name>mime-type</name>
+                            <name>honor-transactions</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>message-demarcator</key>
+                        <value>
+                            <name>message-demarcator</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>separate-by-key</key>
+                        <value>
+                            <name>separate-by-key</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>security.protocol</key>
+                        <value>
+                            <name>security.protocol</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>sasl.mechanism</key>
+                        <value>
+                            <name>sasl.mechanism</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>kerberos-credentials-service</key>
+                        <value>
+                            <identifiesControllerService>org.apache.nifi.kerberos.KerberosCredentialsService</identifiesControllerService>
+                            <name>kerberos-credentials-service</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>kerberos-user-service</key>
+                        <value>
+                            <identifiesControllerService>org.apache.nifi.kerberos.SelfContainedKerberosUserService</identifiesControllerService>
+                            <name>kerberos-user-service</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>sasl.kerberos.service.name</key>
+                        <value>
+                            <name>sasl.kerberos.service.name</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>sasl.kerberos.principal</key>
+                        <value>
+                            <name>sasl.kerberos.principal</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>sasl.kerberos.keytab</key>
+                        <value>
+                            <name>sasl.kerberos.keytab</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>sasl.username</key>
+                        <value>
+                            <dependencies>
+<dependentValues>PLAIN</dependentValues>
+<dependentValues>SCRAM-SHA-512</dependentValues>
+<dependentValues>SCRAM-SHA-256</dependentValues>
+<propertyName>sasl.mechanism</propertyName>
+                            </dependencies>
+                            <name>sasl.username</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>sasl.password</key>
+                        <value>
+                            <dependencies>
+<dependentValues>PLAIN</dependentValues>
+<dependentValues>SCRAM-SHA-512</dependentValues>
+<dependentValues>SCRAM-SHA-256</dependentValues>
+<propertyName>sasl.mechanism</propertyName>
+                            </dependencies>
+                            <name>sasl.password</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>sasl.token.auth</key>
+                        <value>
+                            <dependencies>
+<dependentValues>SCRAM-SHA-512</dependentValues>
+<dependentValues>SCRAM-SHA-256</dependentValues>
+<propertyName>sasl.mechanism</propertyName>
+                            </dependencies>
+                            <name>sasl.token.auth</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>aws.profile.name</key>
+                        <value>
+                            <dependencies>
+<dependentValues>AWS_MSK_IAM</dependentValues>
+<propertyName>sasl.mechanism</propertyName>
+                            </dependencies>
+                            <name>aws.profile.name</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>ssl.context.service</key>
+                        <value>
+                            <identifiesControllerService>org.apache.nifi.ssl.SSLContextService</identifiesControllerService>
+                            <name>ssl.context.service</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>key-attribute-encoding</key>
+                        <value>
+                            <name>key-attribute-encoding</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>auto.offset.reset</key>
+                        <value>
+                            <name>auto.offset.reset</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>message-header-encoding</key>
+                        <value>
+                            <name>message-header-encoding</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>header-name-regex</key>
+                        <value>
+                            <name>header-name-regex</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>max.poll.records</key>
+                        <value>
+                            <name>max.poll.records</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Communications Timeout</key>
+                        <value>
+                            <name>Communications Timeout</name>
                         </value>
                     </entry>
                 </descriptors>
@@ -236,49 +383,120 @@
                 <penaltyDuration>30 sec</penaltyDuration>
                 <properties>
                     <entry>
-                        <key>File Size</key>
-                        <value>0B</value>
+                        <key>bootstrap.servers</key>
+                        <value>kafka:9092</value>
                     </entry>
                     <entry>
-                        <key>Batch Size</key>
-                        <value>1</value>
+                        <key>topic</key>
+                        <value>asteroid</value>
                     </entry>
                     <entry>
-                        <key>Data Format</key>
-                        <value>Text</value>
+                        <key>topic_type</key>
+                        <value>names</value>
                     </entry>
                     <entry>
-                        <key>Unique FlowFiles</key>
+                        <key>group.id</key>
+                        <value>asteroid-nifi</value>
+                    </entry>
+                    <entry>
+                        <key>Commit Offsets</key>
+                        <value>true</value>
+                    </entry>
+                    <entry>
+                        <key>max-uncommit-offset-wait</key>
+                        <value>1 secs</value>
+                    </entry>
+                    <entry>
+                        <key>honor-transactions</key>
+                        <value>true</value>
+                    </entry>
+                    <entry>
+                        <key>message-demarcator</key>
+                    </entry>
+                    <entry>
+                        <key>separate-by-key</key>
                         <value>false</value>
                     </entry>
                     <entry>
-                        <key>generate-ff-custom-text</key>
+                        <key>security.protocol</key>
+                        <value>PLAINTEXT</value>
                     </entry>
                     <entry>
-                        <key>character-set</key>
+                        <key>sasl.mechanism</key>
+                        <value>GSSAPI</value>
+                    </entry>
+                    <entry>
+                        <key>kerberos-credentials-service</key>
+                    </entry>
+                    <entry>
+                        <key>kerberos-user-service</key>
+                    </entry>
+                    <entry>
+                        <key>sasl.kerberos.service.name</key>
+                    </entry>
+                    <entry>
+                        <key>sasl.kerberos.principal</key>
+                    </entry>
+                    <entry>
+                        <key>sasl.kerberos.keytab</key>
+                    </entry>
+                    <entry>
+                        <key>sasl.username</key>
+                    </entry>
+                    <entry>
+                        <key>sasl.password</key>
+                    </entry>
+                    <entry>
+                        <key>sasl.token.auth</key>
+                        <value>false</value>
+                    </entry>
+                    <entry>
+                        <key>aws.profile.name</key>
+                    </entry>
+                    <entry>
+                        <key>ssl.context.service</key>
+                    </entry>
+                    <entry>
+                        <key>key-attribute-encoding</key>
+                        <value>utf-8</value>
+                    </entry>
+                    <entry>
+                        <key>auto.offset.reset</key>
+                        <value>latest</value>
+                    </entry>
+                    <entry>
+                        <key>message-header-encoding</key>
                         <value>UTF-8</value>
                     </entry>
                     <entry>
-                        <key>mime-type</key>
+                        <key>header-name-regex</key>
+                    </entry>
+                    <entry>
+                        <key>max.poll.records</key>
+                        <value>10000</value>
+                    </entry>
+                    <entry>
+                        <key>Communications Timeout</key>
+                        <value>60 secs</value>
                     </entry>
                 </properties>
                 <retryCount>10</retryCount>
                 <runDurationMillis>0</runDurationMillis>
-                <schedulingPeriod>1 min</schedulingPeriod>
+                <schedulingPeriod>0 sec</schedulingPeriod>
                 <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
                 <yieldDuration>1 sec</yieldDuration>
             </config>
             <executionNodeRestricted>false</executionNodeRestricted>
-            <name>GenerateFlowFile</name>
+            <name>ConsumeKafka_2_6</name>
             <relationships>
                 <autoTerminate>false</autoTerminate>
                 <name>success</name>
                 <retry>false</retry>
             </relationships>
-            <state>STOPPED</state>
+            <state>RUNNING</state>
             <style/>
-            <type>org.apache.nifi.processors.standard.GenerateFlowFile</type>
+            <type>org.apache.nifi.processors.kafka.pubsub.ConsumeKafka_2_6</type>
         </processors>
     </snippet>
-    <timestamp>04/04/2023 21:12:24 EDT</timestamp>
+    <timestamp>04/06/2023 22:58:47 EDT</timestamp>
 </template>
