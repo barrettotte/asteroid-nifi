@@ -91,10 +91,11 @@ public class AsteroidController {
     })
     public ResponseEntity<Asteroid> updateAsteroid(@PathVariable(value = "id") String id, @RequestBody Asteroid toUpdate) {
         try {
-            if (asteroidService.getById(id).isEmpty()) {
+            Optional<Asteroid> original = asteroidService.getById(id);
+            if (original.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            Asteroid updated = asteroidService.update(toUpdate);
+            Asteroid updated = asteroidService.update(original.get(), toUpdate);
             return new ResponseEntity<>(updated, HttpStatus.OK);
         } catch (Exception e) {
             LOGGER.error("Failed to update asteroid.", e);

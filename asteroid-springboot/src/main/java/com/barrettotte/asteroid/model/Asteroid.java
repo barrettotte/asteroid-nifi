@@ -1,8 +1,14 @@
 package com.barrettotte.asteroid.model;
 
+import java.time.Instant;
 import java.util.Objects;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "asteroid")
@@ -16,29 +22,42 @@ public class Asteroid {
     private String name;
 
     @Column(name = "diameter_min")
-    private float diameterMin;
+    private Float diameterMin;
 
     @Column(name = "diameter_max")
-    private float diameterMax;
+    private Float diameterMax;
 
     @Column(name = "hazard")
-    private boolean hazard;
+    private Boolean hazard;
 
     @Column(name = "relative_velocity")
-    private float relativeVelocity;
+    private Float relativeVelocity;
 
     @Column(name = "distance")
-    private float distance;
+    private Float distance;
 
     @Column(name = "orbiting_body")
     private String orbitingBody;
+
+    @Column(name = "created")
+    private Instant created;
+
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "updated")
+    private Instant updated;
+
+    @Column(name = "updated_by")
+    private String updatedBy;
 
     public Asteroid() {
         // nop
     }
 
-    public Asteroid(String id, String name, float diameterMin, float diameterMax, boolean hazard,
-                    float relativeVelocity, float distance, String orbitingBody) {
+    public Asteroid(String id, String name, Float diameterMin, Float diameterMax, Boolean hazard,
+                    Float relativeVelocity, Float distance, String orbitingBody, Instant created,
+                    String createdBy, Instant updated, String updatedBy) {
         this.id = id;
         this.name = name;
         this.diameterMin = diameterMin;
@@ -47,6 +66,10 @@ public class Asteroid {
         this.relativeVelocity = relativeVelocity;
         this.distance = distance;
         this.orbitingBody = orbitingBody;
+        this.created = created;
+        this.createdBy = createdBy;
+        this.updated = updated;
+        this.updatedBy = updatedBy;
     }
 
     public String getId() {
@@ -57,43 +80,55 @@ public class Asteroid {
         this.id = id;
     }
 
-    public float getDiameterMin() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Float getDiameterMin() {
         return diameterMin;
     }
 
-    public void setDiameterMin(float diameterMin) {
+    public void setDiameterMin(Float diameterMin) {
         this.diameterMin = diameterMin;
     }
 
-    public float getDiameterMax() {
+    public Float getDiameterMax() {
         return diameterMax;
     }
 
-    public void setDiameterMax(float diameterMax) {
+    public void setDiameterMax(Float diameterMax) {
         this.diameterMax = diameterMax;
     }
 
-    public boolean getHazard() {
+    public Boolean isHazard() {
         return hazard;
     }
 
-    public void setHazard(boolean hazard) {
+    public Boolean getHazard() {
+        return hazard;
+    }
+
+    public void setHazard(Boolean hazard) {
         this.hazard = hazard;
     }
 
-    public float getRelativeVelocity() {
+    public Float getRelativeVelocity() {
         return relativeVelocity;
     }
 
-    public void setRelativeVelocity(float relativeVelocity) {
+    public void setRelativeVelocity(Float relativeVelocity) {
         this.relativeVelocity = relativeVelocity;
     }
 
-    public float getDistance() {
+    public Float getDistance() {
         return distance;
     }
 
-    public void setDistance(float distance) {
+    public void setDistance(Float distance) {
         this.distance = distance;
     }
 
@@ -105,6 +140,38 @@ public class Asteroid {
         this.orbitingBody = orbitingBody;
     }
 
+    public Instant getCreated() {
+        return created;
+    }
+
+    public void setCreated(Instant created) {
+        this.created = created;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Instant getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Instant updated) {
+        this.updated = updated;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
     @Override
     public boolean equals (Object o) {
         if (o == this) {
@@ -113,19 +180,25 @@ public class Asteroid {
         if (!(o instanceof Asteroid other)) {
             return false;
         }
-        return (Objects.equals(this.id, other.id) &&
-                Objects.equals(this.name, other.name) &&
-                this.diameterMin == other.diameterMin &&
-                this.diameterMax == other.diameterMax &&
-                this.hazard == other.hazard &&
-                this.relativeVelocity == other.relativeVelocity &&
-                this.distance == other.distance &&
-                Objects.equals(this.orbitingBody, other.orbitingBody));
+        return (Objects.equals(id, other.id) &&
+                Objects.equals(name, other.name) &&
+                Objects.equals(diameterMin, other.diameterMax) &&
+                Objects.equals(diameterMax, other.diameterMax) &&
+                Objects.equals(hazard, other.hazard) &&
+                Objects.equals(relativeVelocity, other.relativeVelocity) &&
+                Objects.equals(distance, other.distance) &&
+                Objects.equals(orbitingBody, other.orbitingBody) &&
+                Objects.equals(created, other.created) &&
+                Objects.equals(createdBy, other.createdBy) &&
+                Objects.equals(updated, other.updated) &&
+                Objects.equals(updatedBy, other.updatedBy)
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, diameterMin, diameterMax, hazard, relativeVelocity, distance, orbitingBody);
+        return Objects.hash(id, name, diameterMin, diameterMax, hazard, relativeVelocity, distance, orbitingBody,
+                created, createdBy, updated, updatedBy);
     }
 
     @Override
@@ -138,7 +211,11 @@ public class Asteroid {
                 "hazard=" + hazard + "," +
                 "relativeVelocity=" + relativeVelocity + "," +
                 "distance=" + distance + "," +
-                "orbitingBody=" + orbitingBody +
+                "orbitingBody=" + orbitingBody + "," +
+                "created=" + created + "," +
+                "createdBy='" + createdBy + "'," +
+                "updated=" + updated + "," +
+                "updatedBy='" + updatedBy + "'" +
                 "}";
     }
 }

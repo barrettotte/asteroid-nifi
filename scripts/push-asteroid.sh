@@ -42,7 +42,7 @@ echo $asteroid_json
 # send asteroid to kafka, creating topic if not exists
 (docker exec -i kafka sh <<-EOF
     kafka-topics.sh --create $bootstrap $replication $partition $topic --if-not-exists
-    echo "$asteroid_json" | kafka-console-producer.sh $brokers $topic
+    echo '$asteroid_json' | kafka-console-producer.sh $brokers $topic
 EOF
 ) || (echo 'failed to send asteroid.'; exit 1)
 

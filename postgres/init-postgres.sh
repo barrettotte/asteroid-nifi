@@ -21,7 +21,15 @@ psql -v ON_ERROR_STOP=1 --username postgres --dbname $asteroid_db <<-EOF
         hazard BOOLEAN DEFAULT FALSE,
         relative_velocity NUMERIC NOT NULL,
         distance NUMERIC NOT NULL,
-        orbiting_body VARCHAR NOT NULL
+        orbiting_body VARCHAR NOT NULL,
+        created TIMESTAMP NOT NULL,
+        created_by VARCHAR NOT NULL,
+        updated TIMESTAMP NOT NULL,
+        updated_by VARCHAR NOT NULL
     );
+
+    CREATE INDEX IF NOT EXISTS idx_asteroid_orbiting_body ON asteroid(orbiting_body);
+    CREATE INDEX IF NOT EXISTS idx_asteroid_created ON asteroid(created);
+
     GRANT ALL PRIVILEGES ON TABLE $asteroid_db TO $POSTGRES_ASTEROID_USER;
 EOF
