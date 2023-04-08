@@ -30,6 +30,8 @@ Things I didn't end up doing because I was lazy and wanted to keep the project m
 - `asteroid-sb`
   - Fetch all endpoint is not paged
   - Thymeleaf asteroid summary page
+- `nifi`
+  - didn't end up using the live NASA NEOWS API, just stuck with my mock API using their sample data
 
 ## URLs
 
