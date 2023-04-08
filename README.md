@@ -2,8 +2,8 @@
 
 A NiFi flow to ingest and transform asteroid data.
 
-This little project is just to get more practice with data flows using Apache NiFi, Apache Kafka and Jolt.
-I'm using a combination of real data pulled from the [NASA NeoWs API](https://api.nasa.gov/) and generated random data.
+This little project is just to get more practice with data flows using Apache NiFi and Apache Kafka.
+I'm using a combination of mock data pulled from [NASA's NeoWs API](https://api.nasa.gov/) and generated random data.
 
 <a href="images/diagram.png"><img src="images/diagram.png" alt="diagram" width="50%" height="50%"/></a>
 
