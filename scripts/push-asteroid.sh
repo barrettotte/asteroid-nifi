@@ -18,7 +18,7 @@ asteroid_velocity=$(($RANDOM % 100 + 1))
 asteroid_distance=$(($RANDOM % 1000 + 1))
 asteroid_hazard=$(($RANDOM % 2))
 asteroid_orbiting_body='earth'
-asteroid_created=$(date '+%Y-%m-%d %H:%M:%S')
+asteroid_created=$(date '+%Y-%m-%d %H:%M:%S.%6N')
 asteroid_created_by='push-asteroid.sh'
 
 if [[ $asteroid_hazard == 1 ]]; then

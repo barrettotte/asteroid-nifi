@@ -64,7 +64,7 @@ def get_asteroid_by_id(asteroid_id):
 def create_asteroid():
     try:
         app.logger.debug(f'create_asteroid() {request.json}')
-        created = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        created = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
 
         asteroid = Asteroid(name=request.json['name'], diameter_min=request.json['diameter_min'], 
                             diameter_max=request.json['diameter_max'], hazard=request.json['hazard'],

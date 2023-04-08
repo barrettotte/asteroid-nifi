@@ -22,9 +22,9 @@ psql -v ON_ERROR_STOP=1 --username postgres --dbname $asteroid_db <<-EOF
         relative_velocity NUMERIC NOT NULL,
         distance NUMERIC NOT NULL,
         orbiting_body VARCHAR NOT NULL,
-        created TIMESTAMP NOT NULL,
+        created TIMESTAMP WITHOUT TIME ZONE NOT NULL,
         created_by VARCHAR NOT NULL,
-        updated TIMESTAMP NOT NULL,
+        updated TIMESTAMP WITHOUT TIME ZONE NOT NULL,
         updated_by VARCHAR NOT NULL
     );
 
