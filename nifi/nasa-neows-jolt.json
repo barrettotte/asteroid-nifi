@@ -1,0 +1,35 @@
+[
+    {
+        "operation": "default",
+        "spec": {
+            "created_by": "nasa-neows-api"
+        }
+    },
+    {
+        "operation": "shift",
+        "spec": {
+            "estimated_diameter": {
+                "kilometers": {
+                    "estimated_diameter_max": "diameter_max",
+                    "estimated_diameter_min": "diameter_min"
+                }
+            },
+            "close_approach_data": {
+                "0": {
+                    "miss_distance": {
+                        "kilometers": "distance"
+                    },
+                    "orbiting_body": "orbiting_body",
+                    "relative_velocity": {
+                        "kilometers_per_hour": "relative_velocity"
+                    },
+                    "close_approach_date_full": "created"
+                }
+            },
+            "id": "id",
+            "name": "name",
+            "is_potentially_hazardous_asteroid": "hazard",
+            "created_by": "&"
+        }
+    }
+]

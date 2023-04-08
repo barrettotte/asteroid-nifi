@@ -1,9 +1,11 @@
 import datetime
+import json
 import logging
 import os
 import traceback
 from bson import ObjectId
 from flask import abort, Flask, jsonify, render_template, request
+from kafka import KafkaProducer
 from pymongo import MongoClient
 from asteroid import Asteroid
 
@@ -18,20 +20,22 @@ mongo_conn = f"mongodb://{os.environ['MONGODB_USERNAME']}:{os.environ['MONGODB_P
 mongo_client = MongoClient(mongo_conn)
 db = mongo_client[os.environ['MONGODB_DB']]
 
-# utils
+# init kafka
+kafka_bootstrap_servers = [f"{os.environ['KAFKA_HOST']}:{os.environ['KAFKA_PORT']}"]
+kafka_topic = os.environ['KAFKA_TOPIC']
+kafka_producer = KafkaProducer(bootstrap_servers=kafka_bootstrap_servers,
+                               value_serializer=lambda m: json.dumps(m, default=str).encode('utf-8'))
 
 # map mongodb row to Asteroid model
 def row_to_asteroid(row: dict) -> Asteroid:
     return Asteroid(name=row['name'], diameter_min=row['diameter_min'], diameter_max=row['diameter_max'],
-                    hazard=row['hazard'], rel_velocity=row['rel_velocity'], distance=row['distance'],
-                    orbiting_body=row['orbiting_body'], created=row['created'], id=row['_id'])
+                    hazard=row['hazard'], relative_velocity=row['relative_velocity'], distance=row['distance'],
+                    orbiting_body=row['orbiting_body'], created=row['created'], created_by=row['created_by'], id=row['_id'])
 
 # query recent asteroids
 def query_asteroids_recent(limit: int = 50) -> list[Asteroid]:
     cursor = db.asteroid.find().sort('created', -1).limit(limit)
     return [row_to_asteroid(asteroid) for asteroid in cursor]
-
-# routes
 
 @app.route('/')
 def index():
@@ -64,11 +68,17 @@ def create_asteroid():
 
         asteroid = Asteroid(name=request.json['name'], diameter_min=request.json['diameter_min'], 
                             diameter_max=request.json['diameter_max'], hazard=request.json['hazard'],
-                            rel_velocity=request.json['rel_velocity'], distance=request.json['distance'], 
+                            relative_velocity=request.json['relative_velocity'], distance=request.json['distance'], 
                             orbiting_body=request.json['orbiting_body'], created=created)
 
         inserted = db.asteroid.insert_one(asteroid.__dict__)
         asteroid.id = str(inserted.inserted_id)
+        
+        # send asteroid to kafka topic
+        msg = asteroid.__dict__
+        msg.pop('_id', None) # remove bson id
+        kafka_producer.send(kafka_topic, asteroid.__dict__)
+
         return jsonify(asteroid), 200
 
     except Exception as e:

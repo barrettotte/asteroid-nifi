@@ -7,8 +7,9 @@ class Asteroid:
     diameter_min: float
     diameter_max: float
     hazard: bool
-    rel_velocity: float
+    relative_velocity: float
     distance: float
     orbiting_body: str
     created: str
-    id: Optional[int] = None # set after mongodb insert
+    created_by: str = 'asteroid-flask'
+    id: Optional[str] = None # set after mongodb insert

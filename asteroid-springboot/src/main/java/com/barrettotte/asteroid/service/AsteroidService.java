@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 public class AsteroidService {
     private static final Logger LOGGER = LoggerFactory.getLogger(AsteroidService.class);
-    private final String appName = "SpringBoot";
+    private final String appName = "asteroid-sb";
 
 
     @Autowired

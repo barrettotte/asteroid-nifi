@@ -37,7 +37,7 @@ document.getElementById('asteroid-save-btn').onclick = async () => {
       'diameter_min': getAndResetField('asteroid-diameter-min'),
       'diameter_max': getAndResetField('asteroid-diameter-max'),
       'hazard': getAndResetField('asteroid-hazard'),
-      'rel_velocity': getAndResetField('asteroid-rel-velocity'),
+      'relative_velocity': getAndResetField('asteroid-rel-velocity'),
       'distance': getAndResetField('asteroid-distance'),
       'orbiting_body': getAndResetField('asteroid-orbiting-body'),
     };

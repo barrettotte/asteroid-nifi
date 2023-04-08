@@ -12,27 +12,33 @@ partitions='--partitions 1'
 topic='--topic asteroid'
 
 asteroid_id=$(uuidgen -r)
+asteroid_name="Asteroid $(echo $asteroid_id | cut -c1-8)"
 asteroid_diameter=$(($RANDOM % 100 + 1))
 asteroid_velocity=$(($RANDOM % 100 + 1))
 asteroid_distance=$(($RANDOM % 1000 + 1))
-hazard=$(($RANDOM % 2))
+asteroid_hazard=$(($RANDOM % 2))
+asteroid_orbiting_body='earth'
+asteroid_created=$(date '+%Y-%m-%d %H:%M:%S')
+asteroid_created_by='push-asteroid.sh'
 
-if [[ $hazard == 1 ]]; then
-  hazard='true'
+if [[ $asteroid_hazard == 1 ]]; then
+  asteroid_hazard='true'
 else
-  hazard='false'
+  asteroid_hazard='false'
 fi
 
 asteroid_json_raw=$(cat <<-EOF
   {
     "id": "$asteroid_id",
-    "name": "Asteroid $(echo $asteroid_id | cut -c1-8)",
+    "name": "$asteroid_name",
     "diameter_min": $(($asteroid_diameter )),
     "diameter_max": $(($asteroid_diameter + 1)),
-    "hazard": $hazard,
+    "hazard": $asteroid_hazard,
     "relative_velocity": $asteroid_velocity,
     "distance": $asteroid_distance,
-    "orbiting_body": "earth"
+    "orbiting_body": "$asteroid_orbiting_body",
+    "created": "$asteroid_created",
+    "created_by": "$asteroid_created_by"
   }
 EOF
 )
