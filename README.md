@@ -5,11 +5,11 @@ A NiFi flow to ingest and transform asteroid data.
 This little project is just to get more practice with data flows using Apache NiFi, Apache Kafka and Jolt.
 I'm using a combination of real data pulled from the [NASA NeoWs API](https://api.nasa.gov/) and generated random data.
 
-TODO: diagram
+<a href="images/diagram.png"><img src="images/diagram.png" alt="diagram" width="50%" height="50%"/></a>
 
 ## NiFi
 
-### Summary
+<a href="images/asteroid-nifi.png"><img src="images/asteroid-nifi.png" alt="nifi" width="50%" height="50%"/></a>
 
 Multiple data inputs:
 
@@ -17,6 +17,14 @@ Multiple data inputs:
 2. HTTP - NASA NeoWs API
 
 Each input is converted to JSON, cleaned/transformed a bit, and inserted into Postgres.
+
+## Flask App
+
+Simple flask api with Jinja UI. User can submit and view asteroid data.
+
+<a href="images/asteroid-flask-table.png"><img src="images/asteroid-flask-table.png" alt="flask asteroid table" width="50%" height="50%"/></a>
+
+<a href="images/asteroid-flask-modal.png"><img src="images/asteroid-flask-modal.png" alt="flask asteroid modal" width="50%" height="50%"/></a>
 
 ## Not Implemented
 
@@ -31,7 +39,8 @@ Things I didn't end up doing because I was lazy and wanted to keep the project m
   - Fetch all endpoint is not paged
   - Thymeleaf asteroid summary page
 - `nifi`
-  - didn't end up using the live NASA NEOWS API, just stuck with my mock API using their sample data
+  - Use NASA NEOWS API; I stuck with my mock API using their sample data
+  - Sending a discord alert if an asteroid is a hazard
 
 ## URLs
 
